@@ -1,7 +1,9 @@
-declare module "uniwind"{
-    import {ViewStyle,TextStyle,ImageStyle} from 'react-natve';
+declare module 'uniwind/native' {
+  import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
-    export type RNStyle = ViewStyle | TextStyle | ImageStyle;
+  export type ClassNameProps = {
+    className?: string;
+  };
 
-    export function uniwind(classNames: string): RNStyle;
+  export function uniwind(className: string): ViewStyle | TextStyle | ImageStyle;
 }
