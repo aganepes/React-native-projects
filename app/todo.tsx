@@ -26,7 +26,7 @@ export default function AboutScreen(){
     // :React.FC<ItemPromp>
     const ItemComponent=({item,RemoveItem}:ItemPromp)=>(
             <View style={[styles.item,
-            {borderBottomWidth:1,borderColor: '#e6bbbbff',paddingBottom:3}]} className="bg-amber-950">
+            {borderBottomWidth:1,borderColor: '#e6bbbbff',paddingBottom:3}]} className="bg-red-950">
                 <Text>{item.id}: {item.content}</Text>
                 <TouchableOpacity 
                     onPress={()=>RemoveItem(item.id)}

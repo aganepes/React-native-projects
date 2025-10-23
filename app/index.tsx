@@ -1,8 +1,9 @@
 import { View,Text, StyleSheet,Image,TouchableOpacity,type ColorValue } from "react-native";
 import {Link} from 'expo-router';
 import { useState } from "react";
+import { styled } from "nativewind";
 
-
+const style
 const urlImage = "https://codebrahma.com/static/8c27233fcb0ff4aa1bf135f164c98dbd/41099/brickwall.jpg";
 
 
@@ -30,7 +31,7 @@ export default function HomeScreen(){
     const [error,setError] = useState<boolean>(false);
     return (
         <View style={styles.Container} >
-            <Image source={{uri:urlImage}} style={styles.image} className={error ? 'bg-red-600' : 'bg-green-600'}/>
+            <Image source={{uri:urlImage}} style={styles.image} className={error ? 'bg-black-600' : 'bg-green-600'}/>
             <View style={styles.contentContainer}>
                 <Text style={{fontSize:24,marginTop:16}} className={colorVariants['black']}>Couter: {couter}</Text>
                 <Text style={styles.subtitle}>Click buttons to change the counter.</Text>
@@ -84,7 +85,9 @@ const styles= StyleSheet.create({
         fontSize:16,
         borderRadius:5,
         alignItems:"center",
+        justifyContent:"center",
         padding:5,
+        height:40,
     },
     buttonConatiner:{
         flex:1,

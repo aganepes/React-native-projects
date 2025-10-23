@@ -7,13 +7,12 @@
         "./*"
       ]
     },
-    "types": ["./app/uniwind-types.d.ts"]
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "uniwind-types.d.ts"
+    "babel.config.js"
   ]
 }
