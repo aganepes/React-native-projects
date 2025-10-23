@@ -1,11 +1,9 @@
-import { View,Text, StyleSheet,Image,TouchableOpacity,Dimensions,type ColorValue } from "react-native";
+import { View,Text, StyleSheet,Image,TouchableOpacity,type ColorValue } from "react-native";
 import {Link} from 'expo-router';
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 
-const pathImage = require("../assets/images/emoji6.png");
-const urlImage = "https://codebrahma.com/static/8c27233fcb0ff4aa1bf135f164c98dbd/41099/brickwall.jpg";
 
+const urlImage = "https://codebrahma.com/static/8c27233fcb0ff4aa1bf135f164c98dbd/41099/brickwall.jpg";
 
 
 type ButtonPromp={
@@ -22,20 +20,25 @@ function MyCustomButton({bgColor,title,onPress}:ButtonPromp){
     )
 }
 
+const colorVariants = {
+  black: "bg-black text-white",
+  blue: "bg-blue-500 text-white",
+  white: "bg-white text-black",
+};
 export default function HomeScreen(){
     const [couter,setCouter]=useState<number>(0);
+    const [error,setError] = useState<boolean>(false);
     return (
-        <View style={styles.Container}>
-            <Image source={{uri:urlImage}} style={styles.image} />
+        <View style={styles.Container} >
+            <Image source={{uri:urlImage}} style={styles.image} className={error ? 'bg-red-600' : 'bg-green-600'}/>
             <View style={styles.contentContainer}>
-                <Text style={{fontSize:24,marginTop:16}}>Couter: {couter}</Text>
+                <Text style={{fontSize:24,marginTop:16}} className={colorVariants['black']}>Couter: {couter}</Text>
                 <Text style={styles.subtitle}>Click buttons to change the counter.</Text>
                 <View style={styles.buttonConatiner}>
                     <MyCustomButton title={"Increment +"} onPress={()=>setCouter(couter+1)}/>
                     <MyCustomButton title={"Decrement -"} bgColor={"pink"} onPress={()=>setCouter(couter-1)}/>
-                 </View>
+                </View>
             </View>
-            
             <Link href={"/todo"} style={styles.button}>
                 <Text>Go To Do list page</Text>
             </Link>
@@ -48,7 +51,6 @@ export default function HomeScreen(){
 
 const styles= StyleSheet.create({
     Container:{
-        boxSizing:"border-box",
         flex:1,
         backgroundColor:"red",
         alignItems:"center",
