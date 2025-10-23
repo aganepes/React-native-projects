@@ -1,6 +1,5 @@
 import { View,Text,StyleSheet,TextInput,TouchableOpacity,FlatList } from "react-native";
 import { Link } from 'expo-router';
-import { uniwind } from "uniwind/native";
 import { useEffect, useState } from "react";
 
 export default function AboutScreen(){
@@ -26,7 +25,7 @@ export default function AboutScreen(){
     // :React.FC<ItemPromp>
     const ItemComponent=({item,RemoveItem}:ItemPromp)=>(
             <View style={[styles.item,
-            {borderBottomWidth:1,borderColor: '#e6bbbbff',paddingBottom:3}]} className="bg-red-950">
+            {borderBottomWidth:1,borderColor: '#e6bbbbff',paddingBottom:3}]}>
                 <Text>{item.id}: {item.content}</Text>
                 <TouchableOpacity 
                     onPress={()=>RemoveItem(item.id)}
