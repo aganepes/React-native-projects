@@ -1,7 +1,7 @@
 import { useTodos } from "@/context";
 import { Link } from 'expo-router';
 import { useState } from "react";
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View  } from "react-native";
 import TodoItemRC from "@/components/TodoItem";
 
 
@@ -18,7 +18,7 @@ export default function AboutScreen(){
         removeTodo(id);
     }
     const EditItem=(id:number, content:string)=>{
-        editTodo(id,content);
+        editTodo(id,content,todos[id].completed);
     }
 
     return (
@@ -38,7 +38,7 @@ export default function AboutScreen(){
             <View style={styles.itemContainer}>
                 <FlatList
                     data={todos}
-                    renderItem={({item})=><TodoItemRC item={item} removeTodo={RemoveItem} editTodo={EditItem}/>}
+                    renderItem={({item}) => <TodoItemRC item={item} removeTodo={RemoveItem} editTodo={EditItem} />}
                     keyExtractor={(item)=>item.id.toString()}
                 />
                 {/* {todos.length ? 

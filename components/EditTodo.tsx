@@ -6,14 +6,14 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 interface Prop{
     todo:todoContent,
     changeView:(isView:boolean)=>void,
-    changeTodoContent:(id:number,content:string)=>void
+    changeTodoContent:(id:number,content:string,completed:boolean)=>void
 }
 
 
 function EditTodo({todo,changeTodoContent,changeView}:Prop) {
     const [content,setContent]=useState<string>(todo.content);
     const editContent=()=>{
-        changeTodoContent(todo.id,content);
+        changeTodoContent(todo.id,content,todo.completed);
         changeView(false);
     }
     return (

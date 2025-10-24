@@ -5,7 +5,7 @@ interface TodoContextType {
     todos: todoContent[];
     addTodo: (content: string) => void;
     removeTodo: (id: number) => void;
-    editTodo:(id:number, content:string) =>void;
+    editTodo:(id:number, content:string,completed:boolean) =>void;
 }
 
 export const TodoContext = createContext<TodoContextType | undefined>(undefined);
@@ -18,15 +18,15 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
     const [todos, setTodos] = useState<todoContent[]>([]);
 
     const addTodo = (content: string) => {
-        const item: todoContent = { id: todos.length + 1, content };
+        const item: todoContent = { id: todos.length + 1, content,completed:false };
         if (content) setTodos(items => [...items, item]);
     };
 
     const removeTodo = (id: number) => {
         setTodos(items => items.filter(item => item.id !== id));
     };
-    const editTodo = (id: number, content: string) => {
-        setTodos(items => items.map(item => item.id === id ? { ...item, content } : item));
+    const editTodo = (id: number, content: string,completed:boolean) => {
+        setTodos(items => items.map(item => item.id === id ? { id:item.id, content, completed} : item));
     }
 
     return (
