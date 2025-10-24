@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {Feather, MaterialIcons} from "@expo/vector-icons";
-import { View,Pressable,StyleSheet } from 'react-native';
+import { View,Pressable,StyleSheet,Text } from 'react-native';
 import { todoContent } from '@/types';
 
 
@@ -13,7 +13,9 @@ function ChechBox({id,content,completed}:todoContent) {
         ):(
             <MaterialIcons name='radio-button-unchecked' color="black" size={20}/>
         )}
-        <Pressable style={isChick ? styles.chicked :styles.notChiched}  onPress={()=>setIsChick(!isChick)}>{id}:{content}</Pressable>
+        <Pressable onPress={()=>setIsChick(!isChick)}>
+            <Text style={[styles[isChick ? "chicked" : "notChiched"],styles.text]}>{id}:{content}</Text>
+        </Pressable>
     </View>
     )
 }
@@ -28,5 +30,10 @@ const styles=StyleSheet.create({
     },
     notChiched:{
         fontSize:18
+    },
+    text:{
+        transitionDelay:"500ms",
+        transitionTimingFunction:"ease-in-out",
+        transitionProperty:"all"
     }
 })

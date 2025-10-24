@@ -31,22 +31,25 @@ export default function AboutScreen(){
                     placeholderTextColor={"gray"}
                     style={styles.inputElement} 
                     />
-                <TouchableOpacity style={styles.addButton} onPress={()=>{AddItem(inputText)}}>
+                <TouchableOpacity style={styles.addButton} onPress={()=>AddItem(inputText)}>
                     <Text>Add</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.itemContainer}>
-                <FlatList
+                {/* <FlatList
                     data={todos}
                     renderItem={({item}) => <TodoItemRC item={item} removeTodo={RemoveItem} editTodo={EditItem} />}
                     keyExtractor={(item)=>item.id.toString()}
-                />
-                {/* {todos.length ? 
-                todos.map( (v) =>(<TodoItemRC item={v}  removeTodo={()=>RemoveItem(v.id)}  key={v.id}/>)) 
-                : ""} */}
+                    style={{gap:10}}
+                /> */}
+                {todos.length ? 
+                todos.map( (v) =>(<TodoItemRC item={v}  removeTodo={()=>RemoveItem(v.id)} editTodo={EditItem}  key={v.id}/>)) 
+                : ""}
             </View>
-            <Link href={"/"} style={styles.linkButton}>
-                <Text>Go Counter page</Text>
+            <Link href={"/"}  asChild>
+                <TouchableOpacity style={styles.linkButton}>
+                    <Text style={{color:"white"}}>Go Counter page</Text>
+                </TouchableOpacity>
             </Link>
         </View>
     )
@@ -107,7 +110,6 @@ const styles=StyleSheet.create({
     linkButton:{
         backgroundColor:"black",
         borderRadius:5,
-        color:'white',
         padding:5
     }
 })
