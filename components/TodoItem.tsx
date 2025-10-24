@@ -1,19 +1,22 @@
 import { todoContent } from '@/types';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import EditTodo from './EditTodo';
 
 interface ItemPromp{
     item:todoContent,
-    removeTodo:(id:number)=>void
+    removeTodo:(id:number)=>void,
+    editTodo:(id:number,content:string,complete?:boolean|false)=>void
 }
 
-const TodoItemRC:React.FC<ItemPromp>=({item,removeTodo})=>{
-  
-  return (<View style={styles.container}>
+const TodoItemRC:React.FC<ItemPromp>=({item,removeTodo,editTodo})=>{
+  const [isViewEditElement,setIsViewEditElement]=useState<boolean>(false);
+
+  return !isViewEditElement ? (<View style={styles.container}>
           <Text>{item.id}: {item.content}</Text>
           <View style={styles.buttons}>
-            <TouchableOpacity onPress={()=>null} 
+            <TouchableOpacity onPress={()=>setIsViewEditElement(!isViewEditElement)} 
               style={[styles.button,styles.editButton]}>
                 <AntDesign name="edit" size={20} color="green" />
             </TouchableOpacity>
@@ -22,8 +25,9 @@ const TodoItemRC:React.FC<ItemPromp>=({item,removeTodo})=>{
                 <AntDesign name="delete" size={20} color="red"  />
             </TouchableOpacity>
           </View>
-      </View>
-    );
+      </View>):(
+        <EditTodo changeView={setIsViewEditElement} changeTodoContent={editTodo} todo={item}/>
+      );
 
 };
 

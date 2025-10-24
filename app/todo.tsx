@@ -1,7 +1,7 @@
 import { useTodos } from "@/context";
 import { Link } from 'expo-router';
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import TodoItemRC from "@/components/TodoItem";
 
 
@@ -36,14 +36,14 @@ export default function AboutScreen(){
                 </TouchableOpacity>
             </View>
             <View style={styles.itemContainer}>
-                {/* <FlatList
+                <FlatList
                     data={todos}
-                    renderItem={({item})=><TodoItemRC item={item}  addTodo ={()=>AddItem(inputText)} removeTodo={RemoveItem}/>}
+                    renderItem={({item})=><TodoItemRC item={item} removeTodo={RemoveItem} editTodo={EditItem}/>}
                     keyExtractor={(item)=>item.id.toString()}
-                /> */}
-                {todos.length ? 
+                />
+                {/* {todos.length ? 
                 todos.map( (v) =>(<TodoItemRC item={v}  removeTodo={()=>RemoveItem(v.id)}  key={v.id}/>)) 
-                : ""}
+                : ""} */}
             </View>
             <Link href={"/"} style={styles.linkButton}>
                 <Text>Go Counter page</Text>
@@ -51,26 +51,6 @@ export default function AboutScreen(){
         </View>
     )
 }
-/*
-// :React.FC<ItemPromp>
-    const ItemComponent=({item,RemoveItem}:ItemPromp)=>(
-            <View style={[styles.item,
-            {borderBottomWidth:1,borderColor: '#e6bbbbff',paddingBottom:3}]}>
-                <Text>{item.id}: {item.content}</Text>
-                <TouchableOpacity onPress={()=>null} style={styles.deleteButton}>
-                    <AntDesign name="edit" size={20} color="green" />
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={()=>RemoveItem(item.id)}
-                    style={styles.deleteButton}
-                    >
-                    <AntDesign name="delete" size={20} color="red"  />
-                </TouchableOpacity>
-            </View>
-        )
-
-*/
-
 
 const styles=StyleSheet.create({
     container:{
