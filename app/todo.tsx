@@ -18,7 +18,7 @@ export default function AboutScreen(){
         removeTodo(id);
     }
     const EditItem=(id:number, content:string)=>{
-        editTodo(id,content,todos[id].completed);
+        editTodo(id,content,todos.filter((v)=>v.id===id)[0].completed);
     }
 
     return (

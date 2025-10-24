@@ -9,9 +9,9 @@ function ChechBox({id,content,completed}:todoContent) {
     return (
     <View style={{flexDirection:"row",gap:10,alignItems:"center"}}>
         {isChick ?(
-            <Feather name='check-circle' color="green" size={24}/>
+            <Feather name='check-circle' color="green" size={20}/>
         ):(
-            <MaterialIcons name='radio-button-unchecked' color="black" size={24}/>
+            <MaterialIcons name='radio-button-unchecked' color="black" size={20}/>
         )}
         <Pressable style={isChick ? styles.chicked :styles.notChiched}  onPress={()=>setIsChick(!isChick)}>{id}:{content}</Pressable>
     </View>
@@ -24,9 +24,9 @@ const styles=StyleSheet.create({
     chicked:{
         textDecorationStyle:'solid',
         textDecorationLine:"line-through",
-        fontSize:24
+        fontSize:18
     },
     notChiched:{
-        fontSize:24
+        fontSize:18
     }
 })

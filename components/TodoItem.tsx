@@ -3,7 +3,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import EditTodo from './EditTodo';
-import ChechBox from './ChechBox';
+import ChechBox from './CheckTodo';
 
 interface ItemPromp{
     item:todoContent,
