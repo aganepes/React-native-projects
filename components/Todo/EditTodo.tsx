@@ -1,36 +1,34 @@
-import { todoContent } from '@/types';
-import AsyncStorageService from '@/services/storage';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-
+import { useTodos } from '@/context/todo';
 
 interface Props {
 	id: string,
-	changeView: (isView: boolean) => void,
-	changeTodo: (id: string, todo:Partial<todoContent>) => void
+	changeView: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
-function EditTodo({ id, changeTodo, changeView }: Props) {
-	const inputRef = useRef<TextInput>(null)
+function EditTodo({ id, changeView }: Props) {
 	const [content, setContent] = useState<string>('');
+	const {getTodo,editTodo} = useTodos();
+
 	useEffect(() => {
 		(async () => {
-			const todo = await AsyncStorageService.getTodoById('todo', id);
+			const todo = await getTodo(id);
 			if (todo) {
 				setContent(todo.content);
 			}
 		}
 		)()
 	}, [id]);
-	const editContent = () => {
-		if(inputRef.current && inputRef.current.value)
-			changeTodo(id, {content:inputRef.current.value});
+
+	const editContent = async () => {
+		if(content) await editTodo(id, {content});
 		changeView(false);
 	}
 	return (
 		<View style={styles.container}>
-			<TextInput  ref={inputRef} style={styles.inputElement} value={content}/>
+			<TextInput  onChangeText={(e)=>setContent(e)} value={content} style={styles.inputElement}/>
 			<View style={styles.buttons}>
 				<TouchableOpacity onPress={editContent}
 					style={[styles.button, styles.editButton]}>

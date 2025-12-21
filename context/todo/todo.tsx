@@ -1,46 +1,66 @@
 import { type todoContent } from '../../types';
-
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import AsyncStorageService from '@/services/storage';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 interface TodoContextType {
-    todos: todoContent[];
-    addTodo: (content: string) => void;
-    removeTodo: (id: number) => void;
-    editTodo:(id:number, content:string,completed:boolean) =>void;
+	todos: [string, todoContent][];
+	getTodo: (id: string) => Promise<todoContent | undefined>;
+	addTodo: (content: string) => Promise<void>;
+	removeTodo: (id: string) => Promise<void>;
+	editTodo: (id: string, todo: Partial<todoContent>) => Promise<void>;
 }
 
 export const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
 interface Props {
-    children: ReactNode;
+	children: ReactNode;
 }
 
-export const TodoProvider: React.FC<Props> = ({ children }) => {
-    const [todos, setTodos] = useState<todoContent[]>([]);
+export const TodoProvider: React.FC<Props> = ({ children }: Props) => {
+	const [todos, setTodos] = useState<[string, todoContent][]>([]);
+	const refreshTodo = async () => {
+		const todos = await AsyncStorageService.getTodos('todos');
+		if (todos && Object.keys(todos).length) {
+			setTodos(Object.entries(todos));
+		}else{
+			setTodos([]);
+		}
+	}
+	useEffect(() => {
+		refreshTodo();
+	}, []);
 
-    const addTodo = (content: string) => {
-        const item: todoContent = { id: todos.length + 1, content,completed:false };
-        if (content) setTodos(items => [...items, item]);
-    };
+	const getTodo = async (id: string): Promise<todoContent | undefined> => {
+		const todo = await AsyncStorageService.getTodoById('todos', id);
+		if (todo)
+			return todo
+	}
+	const addTodo = async (content: string) => {
+		await AsyncStorageService.setTodo('todos', content);
+		refreshTodo();
+	};
 
-    const removeTodo = (id: number) => {
-        setTodos(items => items.filter(item => item.id !== id));
-    };
-    const editTodo = (id: number, content: string,completed:boolean) => {
-        setTodos(items => items.map(item => item.id === id ? { id:item.id, content, completed} : item));
-    }
+	const removeTodo = async (id: string) => {
+		await AsyncStorageService.removeTodoById('todos', id);
+		refreshTodo();
+	};
 
-    return (
-        <TodoContext.Provider value={{ todos, addTodo, removeTodo, editTodo }}>
-            {children}
-        </TodoContext.Provider>
-    );
+	const editTodo = async (id: string, todo: Partial<todoContent>) => {
+		await AsyncStorageService.updateTodoById('todos', id, todo);
+		refreshTodo();
+	}
+
+	return (
+		<TodoContext.Provider value={{ todos, addTodo, removeTodo, editTodo, getTodo }}>
+			{children}
+		</TodoContext.Provider>
+	);
 };
 
 export const useTodos = () => {
-    const context = useContext(TodoContext);
-    if (context === undefined) {
-        throw new Error('useTodos must be used within a TodoProvider');
-    }
-    return context;
+	const context = useContext(TodoContext);
+	if (context === undefined) {
+		throw new Error('useTodos must be used within a TodoProvider');
+	}
+	return context;
 };

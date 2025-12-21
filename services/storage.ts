@@ -3,13 +3,14 @@ import { v4 as uuid } from 'uuid';
 import { todoContent } from "@/types";
 
 namespace  AsyncStorageService{
-
 	export const getTodos = async (key: string): Promise<Record<string,todoContent> | undefined> => {
 		try {
 			const data = await AsyncStorage.getItem(key);
-			if (!data)
-				throw new Error(`There is no data for this ${key} key.`);
-			return JSON.parse(data);
+			if (!data){
+				await AsyncStorage.setItem(key,JSON.stringify({}));
+			}else{
+				return JSON.parse(data);
+			}
 		} catch (error: any) {
 			if (error instanceof Error) {
 				console.error(error.message);
@@ -44,7 +45,7 @@ namespace  AsyncStorageService{
 
 			const todosEntries = Object.entries(todos) ;
 			const todoIndex = todosEntries.findIndex((todo)=>todo[1].content===content);
-			if(todoIndex)
+			if(todoIndex!=-1)
 				throw new Error(`This content exists.`);
 
 			todos[uuid()]={content,completed:false};
@@ -69,6 +70,25 @@ namespace  AsyncStorageService{
 
 			todos[id] = {...todos[id],...todo};
 
+			await AsyncStorage.setItem(key,JSON.stringify(todos));
+		} catch (error: any) {
+			if (error instanceof Error) {
+				console.error(error.message);
+			}
+		}
+	}
+	export const removeTodoById = async (key:string,id: string): Promise<void> => {
+		try {
+			const data = await AsyncStorage.getItem(key);
+
+			if (!data)
+				throw new Error(`There is no data for this ${key} key.`);
+
+			const todos = JSON.parse(data) as Record<string,todoContent>;
+			if(!todos[id])
+				throw new Error('This ID does not exist.');
+			
+			delete todos[id];
 			await AsyncStorage.setItem(key,JSON.stringify(todos));
 		} catch (error: any) {
 			if (error instanceof Error) {

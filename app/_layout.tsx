@@ -6,7 +6,7 @@ export default function RootLayout(){
         <TodoProvider>
             <Stack>
                 <Stack.Screen name="index" options={{headerTitle:"Counter"}} />
-                <Stack.Screen name="todo" options={{headerTitle:"ToDo List"}} />
+                <Stack.Screen name="Todo" options={{headerTitle:"ToDo List"}} />
             </Stack>
             <StatusBar barStyle="dark-content" />
         </TodoProvider>

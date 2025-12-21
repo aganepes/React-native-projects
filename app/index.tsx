@@ -3,7 +3,6 @@ import { Tabs, TabSlot, TabList, TabTrigger } from 'expo-router/ui';
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View, type ColorValue } from "react-native";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 const urlImage = "https://codebrahma.com/static/8c27233fcb0ff4aa1bf135f164c98dbd/41099/brickwall.jpg";
 
 
