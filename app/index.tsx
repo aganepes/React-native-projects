@@ -1,6 +1,5 @@
 import { Link } from 'expo-router';
-import { Tabs, TabSlot, TabList, TabTrigger } from 'expo-router/ui';
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View, type ColorValue } from "react-native";
 
 const urlImage = "https://codebrahma.com/static/8c27233fcb0ff4aa1bf135f164c98dbd/41099/brickwall.jpg";
@@ -25,12 +24,6 @@ function MyCustomButton({ bgColor, title, onPress }: ButtonProps) {
 export default function HomeScreen() {
 	const [counter, setCounter] = useState<number>(0);
 	return (<>
-		{/* <Tabs>
-			<TabSlot />
-			<TabList>
-				<TabTrigger name="home" href="/" />
-			</TabList>
-		</Tabs> */}
 		<View style={styles.Container} >
 			<Image source={{ uri: urlImage }} style={styles.image} />
 			<View style={styles.contentContainer}>
