@@ -1,36 +1,31 @@
 import TodoItem from "@/components/Todo/TodoItem";
 import { useTodos } from "@/context/todo";
 import { Link } from 'expo-router';
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
 export default function AboutScreen() {
 	const [textInput, setTextInput] = useState<string>("");
-	const textInputRef = useRef<TextInput>(null);
-	const { todos, addTodo} = useTodos();
+	const { todos, addTodo } = useTodos();
 	const addItem = () => {
 		if (textInput) addTodo(textInput);
 		setTextInput("");
-	}
-	const onChangeText = (newText:string) =>{
-		setTextInput(newText);
-		if(textInputRef.current && textInput.length>5){
-			// textInputRef.current.setNativeProps({style:{backgroundColor:'green'}});
-		}
 	}
 	return (
 		<View style={styles.container}>
 			<View style={styles.inputContainer}>
 				<TextInput
-					onChangeText={onChangeText}
+					onChangeText={(newText: string) => {
+						setTextInput(newText);
+					}}
 					value={textInput}
 					placeholder="Input task ..."
 					placeholderTextColor={"gray"}
-					style={styles.inputElement}
+					style={textInput.length > 5 ? [styles.inputElement, { backgroundColor: 'green' }] : styles.inputElement}
 				/>
 				<TouchableOpacity style={styles.addButton} onPress={addItem}>
-					<Text>Add</Text>
+					<Text style={{color:'white'}}>Add</Text>
 				</TouchableOpacity>
 			</View>
 			<FlatList
@@ -54,7 +49,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		gap: 20,
-		color: "black"
 	},
 	inputContainer: {
 		flexDirection: "row",
@@ -64,6 +58,7 @@ const styles = StyleSheet.create({
 		width: 300,
 	},
 	inputElement: {
+		height:40,
 		borderWidth: 1,
 		borderRadius: 5,
 		padding: 5,
@@ -76,7 +71,6 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 		textTransform: "uppercase",
 		fontWeight: "600",
-		color:"white",
 	},
 	itemContainer: {
 		gap: 10,

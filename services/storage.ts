@@ -1,8 +1,10 @@
+import 'react-native-get-random-values';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { v4 as uuid } from 'uuid';
 import { todoContent } from "@/types";
 
 namespace  AsyncStorageService{
+	
 	export const getTodos = async (key: string): Promise<Record<string,todoContent> | undefined> => {
 		try {
 			const data = await AsyncStorage.getItem(key);
