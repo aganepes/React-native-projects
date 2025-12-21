@@ -1,8 +1,8 @@
-import { useTodos } from "@/context";
+import TodoItemRC from "@/components/Todo/TodoItem";
+import { useTodos } from "@/context/todo/index";
 import { Link } from 'expo-router';
 import { useState } from "react";
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View  } from "react-native";
-import TodoItemRC from "@/components/TodoItem";
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
 export default function AboutScreen(){
@@ -35,17 +35,17 @@ export default function AboutScreen(){
                     <Text>Add</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.itemContainer}>
-                {/* <FlatList
+            {/* <ScrollView style={styles.itemContainer}> */}
+                <FlatList
                     data={todos}
                     renderItem={({item}) => <TodoItemRC item={item} removeTodo={RemoveItem} editTodo={EditItem} />}
                     keyExtractor={(item)=>item.id.toString()}
                     style={{gap:10}}
-                /> */}
-                {todos.length ? 
+                />
+                {/* {todos.length ? 
                 todos.map( (v) =>(<TodoItemRC item={v}  removeTodo={()=>RemoveItem(v.id)} editTodo={EditItem}  key={v.id}/>)) 
-                : ""}
-            </View>
+                : ""} */}
+            {/* </ScrollView> */}
             <Link href={"/"}  asChild>
                 <TouchableOpacity style={styles.linkButton}>
                     <Text style={{color:"white"}}>Go Counter page</Text>
@@ -87,8 +87,9 @@ const styles=StyleSheet.create({
     },
     itemContainer:{
         gap:10,
-        alignItems:"flex-start",
-        width:300,
+        height:500,
+        // alignItems:"flex-start",
+        // width:300,
         paddingHorizontal:10
     },
     item:{

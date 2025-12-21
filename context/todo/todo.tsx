@@ -1,4 +1,5 @@
-import { type todoContent } from '../types';
+import { type todoContent } from '../../types';
+
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 interface TodoContextType {

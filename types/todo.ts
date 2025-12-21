@@ -1,5 +1,4 @@
 export type todoContent = {
-    id:number,
-    content:string,
-    completed:boolean
+	content: string,
+	completed: boolean
 }
