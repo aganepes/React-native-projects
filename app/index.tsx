@@ -1,5 +1,6 @@
 import { Link } from 'expo-router';
 import React, { useState } from "react";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Image, StyleSheet, Text, TouchableOpacity, View, type ColorValue } from "react-native";
 
 const urlImage = "https://codebrahma.com/static/8c27233fcb0ff4aa1bf135f164c98dbd/41099/brickwall.jpg";
@@ -24,28 +25,29 @@ function MyCustomButton({ bgColor, title, onPress }: ButtonProps) {
 export default function HomeScreen() {
 	const [counter, setCounter] = useState<number>(0);
 	return (<>
-		<View style={styles.Container} >
-			<Image source={{ uri: urlImage }} style={styles.image} />
-			<View style={styles.contentContainer}>
-				<Text style={{ fontSize: 24, marginTop: 16 }}>Counter: {counter}</Text>
-				<Text style={styles.subtitle}>Click buttons to change the counter.</Text>
-				<View style={styles.buttonContainer}>
-					<MyCustomButton title={"Increment +"} onPress={() => setCounter(counter => counter + 1)} />
-					<MyCustomButton title={"Decrement -"} bgColor={"pink"} onPress={() => setCounter(counter => counter - 1)} />
+		<SafeAreaProvider>
+			<SafeAreaView style={{ flex: 1 }}>
+				<View style={styles.Container} >
+					<Image source={{ uri: urlImage }} style={styles.image} />
+					<View style={styles.contentContainer}>
+						<Text style={{ fontSize: 24, marginTop: 16 }}>Counter: {counter}</Text>
+						<Text style={styles.subtitle}>Click buttons to change the counter.</Text>
+						<View style={styles.buttonContainer}>
+							<MyCustomButton title={"Increment +"} onPress={() => setCounter(counter => counter + 1)} />
+							<MyCustomButton title={"Decrement -"} bgColor={"pink"} onPress={() => setCounter(counter => counter - 1)} />
+						</View>
+					</View>
+					<Link href={"/todo"} asChild >
+						<TouchableOpacity style={styles.linkButton}>
+							<Text style={styles.linkText}>Go To Do list page</Text>
+						</TouchableOpacity>
+					</Link>
 				</View>
-			</View>
-			<Link href={"/todo"} asChild >
-				<TouchableOpacity style={styles.linkButton}>
-					<Text style={styles.linkText}>Go To Do list page</Text>
-				</TouchableOpacity>
-			</Link>
-		</View>
+			</SafeAreaView>
+		</SafeAreaProvider>
 	</>
 	)
 }
-
-
-
 
 const styles = StyleSheet.create({
 	Container: {

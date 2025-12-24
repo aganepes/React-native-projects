@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useTodos } from '@/context/todo';
+import { useTheme } from '@/context/theme';
 
 interface Props {
 	id: string,
@@ -11,7 +12,7 @@ interface Props {
 function EditTodo({ id, changeView }: Props) {
 	const [content, setContent] = useState<string>('');
 	const {getTodo,editTodo} = useTodos();
-
+	const {theme} = useTheme()!;
 	useEffect(() => {
 		(async () => {
 			const todo = await getTodo(id);
@@ -28,7 +29,7 @@ function EditTodo({ id, changeView }: Props) {
 	}
 	return (
 		<View style={styles.container}>
-			<TextInput  onChangeText={(e)=>setContent(e)} value={content} style={styles.inputElement}/>
+			<TextInput  onChangeText={(e)=>setContent(e)} value={content} style={[styles.inputElement,{color:theme.text}]}/>
 			<View style={styles.buttons}>
 				<TouchableOpacity onPress={editContent}
 					style={[styles.button, styles.editButton]}>

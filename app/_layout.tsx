@@ -1,14 +1,20 @@
+import { ThemeProvider } from "@/context/theme";
 import { TodoProvider } from "@/context/todo";
 import { Stack } from "expo-router";
-import { StatusBar } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
+
+
 export default function RootLayout() {
+	const theme = useColorScheme();
 	return (
-		<TodoProvider>
-			<Stack>
-				<Stack.Screen name="index" options={{ headerTitle: "Counter" }} />
-				<Stack.Screen name="todo" options={{ headerTitle: "ToDo List" }} />
-			</Stack>
-			<StatusBar barStyle="dark-content" />
-		</TodoProvider>
+		<ThemeProvider>
+			<TodoProvider>
+				<Stack>
+					<Stack.Screen name="index" options={{ headerTitle: "Counter" }} />
+					<Stack.Screen name="todo" options={{ headerTitle: "ToDo List" }} />
+				</Stack>
+				<StatusBar barStyle={theme === "dark" ? "dark-content" : "light-content"} />
+			</TodoProvider>
+		</ThemeProvider>
 	)
 }

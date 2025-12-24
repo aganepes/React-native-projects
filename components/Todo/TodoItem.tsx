@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, TouchableOpacity, View, Text } from 'react-nativ
 import EditTodo from './EditTodo';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useTodos } from '@/context/todo';
+import { useTheme } from '@/context/theme';
 
 interface ItemProp {
 	id: string;
@@ -15,17 +16,17 @@ const TodoItem: React.FC<ItemProp> = ({ id, item }) => {
 	const [isViewEditElement, setIsViewEditElement] = useState<boolean>(false);
 	const [isClick, setIsClick] = useState<boolean>(item.completed);
 	const { removeTodo } = useTodos();
-
+	const {theme} = useTheme()!
 	return !isViewEditElement ? (
 		<View style={styles.container}>
 			<Pressable onPress={() => setIsClick(!isClick)} style={styles.checkBoxContainer}>
 				{isClick ? (
 					<Feather name='check-circle' color="green" size={20} />
 				) : (
-					<MaterialIcons name='radio-button-unchecked' color="black" size={20} />
+					<MaterialIcons name='radio-button-unchecked' color={theme.text} size={20} />
 				)
 				}
-				<Text style={[styles[isClick ? "checked" : "notChecked"], styles.text]}>{"  "}{item.content}</Text>
+				<Text style={[styles[isClick ? "checked" : "notChecked"], styles.text,{color:theme.text}]}>{"  "}{item.content}</Text>
 			</Pressable>
 			<View style={styles.buttons}>
 				<TouchableOpacity onPress={() => setIsViewEditElement(!isViewEditElement)}
